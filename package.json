@@ -1,7 +1,6 @@
 {
   "name": "promise-router",
   "version": "0.1.0",
-  "description": "",
   "main": "index.coffee",
   "scripts": {
     "test": "./node_modules/gulp/bin/gulp.js test"
@@ -20,5 +19,16 @@
   "devDependencies": {
     "body-parser": "^1.12.2",
     "flare-gun": "^0.5.7"
-  }
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/claydotio/promise-router.git"
+  },
+  "bugs": {
+    "url": "https://github.com/claydotio/promise-router/issues"
+  },
+  "homepage": "https://github.com/claydotio/promise-router"
 }
