@@ -48,22 +48,32 @@ describe 'promise-router', ->
       .get '/204'
       .expect 204
 
+  it 'ignores handled', ->
+    router.route 'get', '/handled',
+      (req, res) ->
+        res.send 'test'
+        throw new router.Handled()
+
+    flare
+      .get '/handled'
+      .expect 200, 'test'
+
   it 'throws errors', ->
     router.route 'get', '/400',
       ->
-        throw new router.Error400 'test'
+        throw new router.Error {detail: 'test'}
 
     router.route 'get', '/401',
       ->
-        throw new router.Error401 'test'
+        throw new router.Error {status: 401, detail: 'test'}
 
     router.route 'get', '/403',
       ->
-        throw new router.Error403 'test'
+        throw new router.Error {status: 403, detail: 'test'}
 
     router.route 'get', '/404',
       ->
-        throw new router.Error404 'test'
+        throw new router.Error {status: 404, detail: 'test'}
 
     router.route 'get', '/500',
       -> throw new Error 'oops'

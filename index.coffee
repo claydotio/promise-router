@@ -11,29 +11,12 @@ class Router
     @Handled = -> null
     @Handled.prototype = new Error()
 
-    @Error400 = (message) ->
-      @name = 'Error400'
-      @message = message
+    @Error = ({@status, @detail}) ->
+      @status ?= 400
+      @name = 'Error'
+      @message = "Error #{@status}"
       @stack = (new Error()).stack
-    @Error400.prototype = new Error()
-
-    @Error401 = (message) ->
-      @name = 'Error401'
-      @message = message
-      @stack = (new Error()).stack
-    @Error401.prototype = new Error()
-
-    @Error403 = (message) ->
-      @name = 'Error403'
-      @message = message
-      @stack = (new Error()).stack
-    @Error403.prototype = new Error()
-
-    @Error404 = (message) ->
-      @name = 'Error404'
-      @message = message
-      @stack = (new Error()).stack
-    @Error404.prototype = new Error()
+    @Error.prototype = new Error()
     # coffeelint: enable=missing_fat_arrows
 
   route: (verb, path, handlers...) =>
@@ -51,26 +34,11 @@ class Router
           return res.status(204).end()
         res.json result
       .catch @Handled, -> null
-      .catch @Error400, (err) ->
+      .catch @Error, (err) ->
         log.trace err
-        res.status(400).json
-          status: '400'
-          detail: err.message
-      .catch @Error401, (err) ->
-        log.trace err
-        res.status(401).json
-          status: '401'
-          detail: err.message
-      .catch @Error403, (err) ->
-        log.trace err
-        res.status(403).json
-          status: '403'
-          detail: err.message
-      .catch @Error404, (err) ->
-        log.trace err
-        res.status(404).json
-          status: '404'
-          detail: err.message
+        res.status(err.status).json
+          status: "#{err.status}"
+          detail: err.detail
       .catch (err) ->
         log.trace err
         res.status(500).json
