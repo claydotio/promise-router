@@ -2,6 +2,6 @@ gulp = require 'gulp'
 mocha = require 'gulp-mocha'
 
 gulp.task 'test', ->
-  gulp.src './tests/**/*.coffee'
+  gulp.src './test/**/*.coffee'
   .pipe mocha()
   .once 'end', -> process.exit()

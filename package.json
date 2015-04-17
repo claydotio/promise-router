@@ -21,7 +21,7 @@
     "flare-gun": "^0.5.7"
   },
   "directories": {
-    "test": "tests"
+    "test": "test"
   },
   "repository": {
     "type": "git",
