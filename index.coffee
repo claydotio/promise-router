@@ -1,7 +1,7 @@
 _ = require 'lodash'
 Promise = require 'bluebird'
 express = require 'express'
-log = require 'loglevel'
+log = require 'loga'
 
 class Router
   constructor: ->
@@ -35,16 +35,16 @@ class Router
         res.json result
       .catch @Handled, -> null
       .catch @Error, (err) ->
-        log.trace err
+        log.error err
         res.status(err.status).json
           status: "#{err.status}"
           detail: err.detail
       .catch (err) ->
-        log.trace err
+        log.error err
         res.status(500).json
           status: '500'
 
-  getExpressRouter: ->
+  getExpressRouter: =>
     @router
 
 module.exports = new Router()
