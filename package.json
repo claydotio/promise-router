@@ -1,6 +1,6 @@
 {
   "name": "promise-router",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "main": "index.coffee",
   "scripts": {
     "test": "./node_modules/gulp/bin/gulp.js test"
