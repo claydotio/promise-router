@@ -1,8 +1,10 @@
-Flare = require 'flare-gun'
+flareGun = require 'flare-gun'
 express = require 'express'
 Promise = require 'bluebird'
 bodyParser = require 'body-parser'
 should = require('clay-chai').should()
+Joi = require 'joi'
+b = require 'b-assert'
 
 router = require '../'
 
@@ -12,7 +14,7 @@ app = express()
 app.use bodyParser.json()
 app.use routes
 
-flare = new Flare().express(app)
+flare = flareGun.express(app)
 
 describe 'promise-router', ->
   it 'returns results', ->
@@ -89,3 +91,26 @@ describe 'promise-router', ->
       .expect 404
       .get '/500'
       .expect 500
+
+  it 'asserts Joi schemas', ->
+    router.assert {x: 'y'}, {x: Joi.string()}
+
+    b ->
+      router.assert {x: 'y'}, {x: Joi.number()}
+    , (err) ->
+      err.detail is 'child "x" fails because ["x" must be a number]'
+
+    b ->
+      router.assert {x: 'y'}, {}
+    , (err) ->
+      err.detail is '"x" is not allowed'
+
+    b ->
+      router.assert {x: 1}, {x: Joi.string()}
+    , (err) ->
+      err.detail is 'child "x" fails because ["x" must be a string]'
+
+    b ->
+      router.assert {x: '1'}, {x: Joi.number()}
+    , (err) ->
+      err.detail is 'child "x" fails because ["x" must be a number]'

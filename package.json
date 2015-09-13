@@ -13,12 +13,14 @@
     "coffee-script": "^1.9.1",
     "express": "^4.12.3",
     "gulp-mocha": "^2.0.0",
+    "joi": "^6.6.1",
     "lodash": "^3.6.0",
     "loga": "^0.1.1"
   },
   "devDependencies": {
+    "b-assert": "^0.1.2",
     "body-parser": "^1.12.2",
-    "flare-gun": "^0.5.7"
+    "flare-gun": "^0.6.5"
   },
   "directories": {
     "test": "test"

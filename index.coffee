@@ -2,6 +2,7 @@ _ = require 'lodash'
 Promise = require 'bluebird'
 express = require 'express'
 log = require 'loga'
+Joi = require 'joi'
 
 class Router
   constructor: ->
@@ -43,6 +44,12 @@ class Router
         log.error err
         res.status(500).json
           status: '500'
+
+  assert: (obj, schema) =>
+    valid = Joi.validate obj, schema, {presence: 'required', convert: false}
+
+    if valid.error
+      throw new @Error status: 400, detail: valid.error.message
 
   getExpressRouter: =>
     @router

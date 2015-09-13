@@ -30,6 +30,15 @@ app.use router.getExpressRouter()
 @param Function... handlers
 ```
 
+##### assert(obj, schema)
+
+Failure throws 400 errors with Joi message
+
+```
+@param {*} obj
+@param {JoiSchema} schema
+```
+
 ##### getExpressRouter()
 
 ```
