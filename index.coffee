@@ -36,7 +36,8 @@ class Router
         res.json result
       .catch @Handled, -> null
       .catch @Error, (err) ->
-        log.error err
+        # log.error err
+        console.error err
         res.status(err.status).json
           status: "#{err.status}"
           detail: err.detail
